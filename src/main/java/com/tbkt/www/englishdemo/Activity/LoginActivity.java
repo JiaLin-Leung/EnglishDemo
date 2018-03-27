@@ -99,6 +99,7 @@ public class LoginActivity extends BaseActivity {
                 SpUtils.save(LoginActivity.this,"user_id",loginBean.getData().getUser_id());
                 intent.setClass(LoginActivity.this,MainActivity.class);
                 startActivity(intent);
+                LoginActivity.this.finish();
             }
 
             @Override

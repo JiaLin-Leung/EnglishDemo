@@ -7,14 +7,17 @@
     android:orientation="vertical"
     tools:ignore="Orientation">
 
+
     <include
-        layout="@layout/title_layout_all_without_back_with_help"/>
+        layout="@layout/title_layout_all_with_back_with_help"/>
 
     <Button
         android:layout_margin="30dp"
-        android:id="@+id/ecglish_button"
-        android:text="英语"
+        android:id="@+id/words_study"
         android:layout_width="match_parent"
-        android:layout_height="50dp" />
+        android:layout_height="wrap_content"
+        android:text="单词学习"
+        />
+
 
 </LinearLayout>
