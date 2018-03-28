@@ -1,7 +1,11 @@
 package com.englishdemo.Activity.English_Activity;
 
 import android.content.SharedPreferences;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -17,20 +21,28 @@ import com.englishdemo.Tools.LogUtils;
 import com.englishdemo.Tools.SpUtils;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 import okhttp3.Call;
 import okhttp3.Response;
 
 public class English_change_book_activity extends BaseActivity{
 
+    private static final int GET_INFO_DOWN = 1000;
     private TextView all_title_text;
     private ImageView all_title_img_back;
     private ListView change_book_grade;
     private ListView change_book_books;
     private SharedPreferences sp;
-    private String token;
     private OkHttpManager okHttpManager;
     private Gson gson;
     private User user;
+    private ArrayList<String> grade = new ArrayList<>();
+    private int grade_flag_begin;
+    private int grade_flag_end;
+    private Map<String, String> params;
 
     @Override
     public void initView() {
@@ -39,18 +51,40 @@ public class English_change_book_activity extends BaseActivity{
         change_book_books = findViewById(R.id.change_book_books);
         all_title_text.setText("修改教材");
         all_title_img_back = findViewById(R.id.all_title_img_back);
+        all_title_img_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                English_change_book_activity.this.finish();
+            }
+        });
         sp = SpUtils.get(English_change_book_activity.this);
-        token = sp.getString("token","");
     }
 
     @Override
     public void initData() {
         gson = new Gson();
         get_userBaseInfo();
-        all_title_img_back.setOnClickListener(new View.OnClickListener() {
+        params = new HashMap<String, String>();
+        change_book_grade.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-                English_change_book_activity.this.finish();
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                params.put("grade_id",i+1+"");
+                params.put("subject_id",91+"");
+                params.put("type",1+"");
+                LogUtils.showLog("选择教材的年级点击条目",i+"");
+                okHttpManager.postRequest(English_change_book_activity.this, Constant_domain.BaseUrl + Constant_url.book_select,
+                        new LoadCallBack<String>(English_change_book_activity.this) {
+
+                            @Override
+                            protected void onSuccess(Call call, Response response, String s) {
+                                LogUtils.showLog("教材详情",s);
+                            }
+
+                            @Override
+                            protected void onEror(Call call, int statusCode, Exception e) {
+
+                            }
+                        },params);
             }
         });
     }
@@ -65,6 +99,17 @@ public class English_change_book_activity extends BaseActivity{
             protected void onSuccess(Call call, Response response, String s) {
                 user = gson.fromJson(s,User.class);
                 LogUtils.showLog("获取用户基本信息成功",user.toString());
+                if(user.getData().getDept_type().equals("1")){
+                    grade_flag_begin = 1;
+                    grade_flag_end = 6;
+                }else{
+                    grade_flag_begin = 6;
+                    grade_flag_end = 9;
+                }
+                for(int a = grade_flag_begin;a<=grade_flag_end;a++){
+                    grade.add(a+"年级");
+                }
+                change_book_grade.setAdapter(new ArrayAdapter<String>(English_change_book_activity.this,R.layout.item_text,R.id.text_id,grade));
             }
 
             @Override
@@ -73,6 +118,19 @@ public class English_change_book_activity extends BaseActivity{
             }
         });
     }
+
+//    private Handler handler = new Handler() {
+//
+//        @Override
+//        public void handleMessage(Message msg) {
+//            super.handleMessage(msg);
+//            switch (msg.what){
+//                case GET_INFO_DOWN:
+//
+//                    break;
+//            }
+//        }
+//    };
 
     @Override
     public int getLayout() {
