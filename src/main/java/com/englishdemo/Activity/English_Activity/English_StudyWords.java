@@ -32,6 +32,6 @@ public class English_StudyWords extends BaseActivity {
 
     @Override
     public int getLayout() {
-        return R.layout.activity_english_main;
+        return R.layout.activity_english_study;
     }
 }
