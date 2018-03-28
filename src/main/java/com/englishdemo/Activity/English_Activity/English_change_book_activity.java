@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.Bean.User;
 import com.englishdemo.Activity.BaseActivity;
 import com.englishdemo.Internet.LoadCallBack;
 import com.englishdemo.Internet.OkHttpManager;
@@ -14,9 +15,9 @@ import com.englishdemo.Tools.Constant_domain;
 import com.englishdemo.Tools.Constant_url;
 import com.englishdemo.Tools.LogUtils;
 import com.englishdemo.Tools.SpUtils;
+import com.google.gson.Gson;
 
 import okhttp3.Call;
-import okhttp3.OkHttpClient;
 import okhttp3.Response;
 
 public class English_change_book_activity extends BaseActivity{
@@ -28,6 +29,8 @@ public class English_change_book_activity extends BaseActivity{
     private SharedPreferences sp;
     private String token;
     private OkHttpManager okHttpManager;
+    private Gson gson;
+    private User user;
 
     @Override
     public void initView() {
@@ -42,7 +45,8 @@ public class English_change_book_activity extends BaseActivity{
 
     @Override
     public void initData() {
-        get_userBaseInfo(token);
+        gson = new Gson();
+        get_userBaseInfo();
         all_title_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -53,19 +57,19 @@ public class English_change_book_activity extends BaseActivity{
 
     /**
      * 获取用户基本数据
-     * @param token
      */
-    private void get_userBaseInfo(String token) {
+    private void get_userBaseInfo() {
         okHttpManager = OkHttpManager.getInstance();
         okHttpManager.getRequest(English_change_book_activity.this,Constant_domain.BaseUrl + Constant_url.user_profile, new LoadCallBack<String>(English_change_book_activity.this) {
             @Override
             protected void onSuccess(Call call, Response response, String s) {
-                LogUtils.showLog("获取用户基本信息",s);
+                user = gson.fromJson(s,User.class);
+                LogUtils.showLog("获取用户基本信息成功",user.toString());
             }
 
             @Override
             protected void onEror(Call call, int statusCode, Exception e) {
-
+                LogUtils.showLog("获取用户基本信息失败",e.toString());
             }
         });
     }

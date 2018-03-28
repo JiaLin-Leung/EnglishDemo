@@ -75,6 +75,7 @@ public class OkHttpManager {
      * @param callBack 回调函数
      */
     public void getRequest(Context context,String url, final BaseCallBack callBack) {
+        LogUtils.showLog("服务器地址",url);
         Request request = buildRequest(context,url, null, HttpMethodType.GET);
         doRequest(context,request, callBack);
     }

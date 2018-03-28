@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.Tools.tools;
 import com.google.gson.Gson;
 import com.englishdemo.Bean.LoginBean;
 import com.englishdemo.Internet.LoadCallBack;
@@ -78,13 +79,13 @@ public class LoginActivity extends BaseActivity {
         Map<String, String> params = new HashMap<String, String>();
         params.put("username",username);
         params.put("password",password);
-        params.put("login_type",90+"");
-        params.put("version",6.0+"");
-        params.put("name",1111111+"");
-        params.put("model","MI 4LTE");
-        params.put("platform","Android");
-        params.put("uuid","uuid");
-        params.put("appversion","111111");
+        params.put("login_type",9+"");
+        params.put("version", tools.getAndroidVersion());
+        params.put("name", tools.getAndroidName(this));
+        params.put("model", tools.getDeviceISN(this));
+        params.put("platform", "Android");
+        params.put("uuid", tools.getDeviceType(this));
+        params.put("appversion", tools.getAppVersion(this));
         mOkHttpManager = OkHttpManager.getInstance();
         mOkHttpManager.postRequest(LoginActivity.this,Constant_domain.BaseUrl + Constant_url.login_url_stu, new LoadCallBack<String>(LoginActivity.this) {
 
