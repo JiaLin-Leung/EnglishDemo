@@ -1,16 +1,16 @@
 package com.englishdemo.Activity.English_Activity;
 
 import android.content.SharedPreferences;
-import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.Bean.English_Book;
+import com.Bean.ResponseBean;
+import com.englishdemo.Bean.English_Book;
 import com.Bean.User;
 import com.englishdemo.Activity.BaseActivity;
 import com.englishdemo.Adapter.BookAdapter;
@@ -45,6 +45,7 @@ public class English_change_book_activity extends BaseActivity{
     private int grade_flag_begin;
     private int grade_flag_end;
     private Map<String, String> params;
+    private Map<String, String> params_book_info;
     private English_Book english_book;
 
     @Override
@@ -61,6 +62,32 @@ public class English_change_book_activity extends BaseActivity{
             }
         });
         sp = SpUtils.get(English_change_book_activity.this);
+        change_book_books.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                    LogUtils.showLog("我点击的是---",i+1+"");
+                    params_book_info = new HashMap<String, String>();
+                    params_book_info.put("book_id",english_book.getData().getBooks().get(i+1).getId());
+                    okHttpManager.postRequest(English_change_book_activity.this, Constant_domain.BaseUrl + Constant_url.book_set, new LoadCallBack<String>(English_change_book_activity.this) {
+
+                        @Override
+                        protected void onSuccess(Call call, Response response, String s) {
+
+                            ResponseBean responseBean = gson.fromJson(s,ResponseBean.class);
+                            if(responseBean.getResponse().equals("ok")){
+                                showToask(English_change_book_activity.this,"设置成功!", Toast.LENGTH_LONG);
+                                English_change_book_activity.this.finish();
+                            }else{
+                                showToask(English_change_book_activity.this,"设置失败,请重试!", Toast.LENGTH_LONG);
+                            }
+                        }
+                        @Override
+                        protected void onEror(Call call, int statusCode, Exception e) {
+
+                        }
+                    },params_book_info);
+                }
+        });
     }
 
     @Override
@@ -71,27 +98,27 @@ public class English_change_book_activity extends BaseActivity{
         change_book_grade.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                params.put("grade_id",i+1+"");
-                params.put("subject_id",91+"");
-                params.put("type",1+"");
-                LogUtils.showLog("选择教材的年级点击条目",i+"");
-                okHttpManager.postRequest(English_change_book_activity.this, Constant_domain.BaseUrl + Constant_url.book_select,
-                        new LoadCallBack<String>(English_change_book_activity.this) {
+                    params.put("grade_id",i+1+"");
+                    params.put("subject_id",91+"");
+                    params.put("type",1+"");
+                    LogUtils.showLog("选择教材的年级点击条目",i+"");
+                    okHttpManager.postRequest(English_change_book_activity.this, Constant_domain.BaseUrl + Constant_url.book_select,
+                            new LoadCallBack<String>(English_change_book_activity.this) {
 
-                            @Override
-                            protected void onSuccess(Call call, Response response, String s) {
+                                @Override
+                                protected void onSuccess(Call call, Response response, String s) {
 
-                                english_book = gson.fromJson(s,English_Book.class);
-                                LogUtils.showLog("获取教材详情成功",english_book.toString());
-                                change_book_books.setAdapter(new BookAdapter(english_book.getData().getBooks(),English_change_book_activity.this));
-                            }
+                                    english_book = gson.fromJson(s,English_Book.class);
+                                    LogUtils.showLog("获取教材详情成功",english_book.toString());
+                                    change_book_books.setAdapter(new BookAdapter(english_book.getData().getBooks(),English_change_book_activity.this));
+                                }
 
-                            @Override
-                            protected void onEror(Call call, int statusCode, Exception e) {
-                                LogUtils.showLog("获取教材详情失败",e.toString());
-                            }
-                        },params);
-            }
+                                @Override
+                                protected void onEror(Call call, int statusCode, Exception e) {
+                                    LogUtils.showLog("获取教材详情失败",e.toString());
+                                }
+                            },params);
+                }
         });
     }
 

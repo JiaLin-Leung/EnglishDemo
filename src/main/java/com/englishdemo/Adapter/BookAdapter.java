@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.Bean.English_Book;
+import com.englishdemo.Bean.English_Book;
 import com.englishdemo.R;
 
 import java.util.List;

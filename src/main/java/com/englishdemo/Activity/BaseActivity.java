@@ -68,6 +68,20 @@ public abstract class BaseActivity extends Activity {
     }
 
     /**
+     * [防止快速点击]
+     *
+     * @return
+     */
+    public boolean fastClick() {
+        long lastClick = 0;
+        if (System.currentTimeMillis() - lastClick <= 1000) {
+            return false;
+        }
+        lastClick = System.currentTimeMillis();
+        return true;
+    }
+
+    /**
      * 初始化控件方法
      */
     public abstract void initView();

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.englishdemo.Activity.English_Activity.English_change_book_activity;
 import com.englishdemo.Activity.LoginActivity;
@@ -241,6 +242,10 @@ public class OkHttpManager {
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     context.startActivity(intent);
 
+                }
+                if(result.contains("fail")){
+                    Toast.makeText(context,response.toString(),Toast.LENGTH_LONG).show();
+                    return;
                 }
                 if (response.isSuccessful()) {
                     Log.e("isSuccessful ",result);
