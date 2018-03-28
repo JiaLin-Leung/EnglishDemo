@@ -86,7 +86,7 @@ public class LoginActivity extends BaseActivity {
         params.put("uuid","uuid");
         params.put("appversion","111111");
         mOkHttpManager = OkHttpManager.getInstance();
-        mOkHttpManager.postRequest(Constant_domain.BaseUrl + Constant_url.login_url_stu, new LoadCallBack<String>(LoginActivity.this) {
+        mOkHttpManager.postRequest(LoginActivity.this,Constant_domain.BaseUrl + Constant_url.login_url_stu, new LoadCallBack<String>(LoginActivity.this) {
 
             @Override
             protected void onSuccess(Call call, Response response, String s) {

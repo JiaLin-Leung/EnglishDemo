@@ -19,10 +19,10 @@ public class English_Main extends BaseActivity {
 
     @Override
     public void initView() {
+        intent = new Intent();
         change_book = findViewById(R.id.change_book);
         all_title_text = findViewById(R.id.all_title_text);
         all_title_img_back = findViewById(R.id.all_title_img_back);
-
         all_title_text.setText("英语主页");
         words_study = findViewById(R.id.words_study);
 
@@ -30,6 +30,20 @@ public class English_Main extends BaseActivity {
 
     @Override
     public void initData() {
+
+        /**
+         * 跳转教材设置页面
+         */
+        change_book.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(English_change_book_activity.class,null);
+            }
+        });
+
+        /**
+         * 返回键逻辑(以后会优化到base里面处理)
+         */
         all_title_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,13 +51,13 @@ public class English_Main extends BaseActivity {
             }
         });
 
+        /**
+         * 跳转单词学习页面
+         */
         words_study.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO 跳转单词学习页面
-                intent = new Intent();
-                intent.setClass(English_Main.this,English_StudyWords.class);
-                startActivity(intent);
+                startActivity(English_StudyWords.class,null);
             }
         });
     }

@@ -1,9 +1,15 @@
 package com.englishdemo.Internet;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
+import com.englishdemo.Activity.English_Activity.English_change_book_activity;
+import com.englishdemo.Activity.LoginActivity;
+import com.englishdemo.Tools.SpUtils;
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
 import com.englishdemo.Tools.LogUtils;
@@ -41,6 +47,9 @@ public class OkHttpManager {
 
     private Handler handler;
 
+    public String tbkt_token;
+    public SharedPreferences sp ;
+
     private OkHttpManager() {
         mOkHttpClient = new OkHttpClient();
         mOkHttpClient.newBuilder().connectTimeout(10, TimeUnit.SECONDS).readTimeout(10, TimeUnit.SECONDS)
@@ -65,9 +74,9 @@ public class OkHttpManager {
      * @param url url地址
      * @param callBack 回调函数
      */
-    public void getRequest(String url, final BaseCallBack callBack) {
-        Request request = buildRequest(url, null, HttpMethodType.GET);
-        doRequest(request, callBack);
+    public void getRequest(Context context,String url, final BaseCallBack callBack) {
+        Request request = buildRequest(context,url, null, HttpMethodType.GET);
+        doRequest(context,request, callBack);
     }
 
     /**
@@ -75,11 +84,11 @@ public class OkHttpManager {
      * @param url POST 地址
      * @param callBack 回调函数
      */
-    public void postRequest(String url, final BaseCallBack callBack, Map<String, String> params) {
+    public void postRequest(Context context,String url, final BaseCallBack callBack, Map<String, String> params) {
         LogUtils.showLog("服务器地址",url);
         LogUtils.showLog("POST传参",params.toString());
-        Request request = buildRequest(url, params, HttpMethodType.POST);
-        doRequest(request, callBack);
+        Request request = buildRequest(context,url, params, HttpMethodType.POST);
+        doRequest(context,request, callBack);
     }
 
     /**
@@ -90,22 +99,22 @@ public class OkHttpManager {
      * @param fileKey 文件key值
      * @param params
      */
-    public void postUploadSingleImage(String url, final BaseCallBack callback, File file, String fileKey, Map<String, String> params) {
+    public void postUploadSingleImage(Context context,String url, final BaseCallBack callback, File file, String fileKey, Map<String, String> params) {
         Param[] paramsArr = fromMapToParams(params);
 
         try {
-            postAsyn(url, callback, file, fileKey, paramsArr);
+            postAsyn(context,url, callback, file, fileKey, paramsArr);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
     }
 
-    public void postUploadMoreImages(String url, final BaseCallBack callback, File[] files, String[] fileKeys, Map<String, String> params) {
+    public void postUploadMoreImages(Context context,String url, final BaseCallBack callback, File[] files, String[] fileKeys, Map<String, String> params) {
         Param[] paramsArr = fromMapToParams(params);
 
         try {
-            postAsyn(url, callback, files, fileKeys, paramsArr);
+            postAsyn(context,url, callback, files, fileKeys, paramsArr);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -116,21 +125,21 @@ public class OkHttpManager {
      * 对内方法
      ************************/
     //单个文件上传请求  不带参数
-    private void postAsyn(String url, BaseCallBack callback, File file, String fileKey) throws IOException {
+    private void postAsyn(Context context,String url, BaseCallBack callback, File file, String fileKey) throws IOException {
         Request request = buildMultipartFormRequest(url, new File[]{file}, new String[]{fileKey}, null);
-        doRequest(request, callback);
+        doRequest(context,request, callback);
     }
 
     //单个文件上传请求 带参数
-    private void postAsyn(String url, BaseCallBack callback, File file, String fileKey, Param... params) throws IOException {
+    private void postAsyn(Context context,String url, BaseCallBack callback, File file, String fileKey, Param... params) throws IOException {
         Request request = buildMultipartFormRequest(url, new File[]{file}, new String[]{fileKey}, params);
-        doRequest(request, callback);
+        doRequest(context,request, callback);
     }
 
     //多个文件上传请求 带参数
-    private void postAsyn(String url, BaseCallBack callback, File[] files, String[] fileKeys, Param... params) throws IOException {
+    private void postAsyn(Context context,String url, BaseCallBack callback, File[] files, String[] fileKeys, Param... params) throws IOException {
         Request request = buildMultipartFormRequest(url, files, fileKeys, params);
-        doRequest(request, callback);
+        doRequest(context,request, callback);
     }
 
     /**
@@ -210,7 +219,7 @@ public class OkHttpManager {
     }
 
     //去进行网络 异步 请求
-    private void doRequest(Request request, final BaseCallBack callBack) {
+    private void doRequest(final Context context, Request request, final BaseCallBack callBack) {
         callBack.OnRequestBefore(request);
         mOkHttpClient.newCall(request).enqueue(new Callback() {
             @Override
@@ -225,6 +234,13 @@ public class OkHttpManager {
                 callBack.onResponse(response);
                 String result = response.body().string();
                 Log.e("result",result);
+                if(result.contains("no_user")){//如果是no_user直接调到登录页!
+                    Intent intent = new Intent();
+                    intent.setClass(context, LoginActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(intent);
+
+                }
                 if (response.isSuccessful()) {
                     Log.e("isSuccessful ",result);
                     if (callBack.mType == String.class) {
@@ -260,10 +276,13 @@ public class OkHttpManager {
      * @param methodType
      * @return
      */
-    private Request buildRequest(String url, Map<String, String> params, HttpMethodType methodType) {
+    private Request buildRequest(Context context,String url, Map<String, String> params, HttpMethodType methodType) {
 
+        sp = SpUtils.get(context);
+        tbkt_token = sp.getString("token","");
         Request.Builder builder = new Request.Builder();
         builder.url(url);
+        builder.addHeader("tbkt-token",tbkt_token);
         if (methodType == HttpMethodType.GET) {
             builder.get();
         } else if (methodType == HttpMethodType.POST) {

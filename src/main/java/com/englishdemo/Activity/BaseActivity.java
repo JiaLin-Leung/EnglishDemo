@@ -2,6 +2,7 @@ package com.englishdemo.Activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -49,6 +50,21 @@ public abstract class BaseActivity extends Activity {
      */
     public void showToask(Context context,String message,int during){
         Toast.makeText(context,message,during).show();
+    }
+
+    /**
+     * [携带数据的页面跳转]
+     *
+     * @param clz
+     * @param bundle
+     */
+    public void startActivity(Class<?> clz, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(this, clz);
+        if (bundle != null) {
+            intent.putExtras(bundle);
+        }
+        startActivity(intent);
     }
 
     /**
