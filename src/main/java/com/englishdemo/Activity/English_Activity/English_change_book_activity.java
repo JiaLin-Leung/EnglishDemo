@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.Bean.English_Book;
 import com.Bean.User;
 import com.englishdemo.Activity.BaseActivity;
 import com.englishdemo.Internet.LoadCallBack;
@@ -43,6 +44,7 @@ public class English_change_book_activity extends BaseActivity{
     private int grade_flag_begin;
     private int grade_flag_end;
     private Map<String, String> params;
+    private English_Book english_book;
 
     @Override
     public void initView() {
@@ -77,7 +79,11 @@ public class English_change_book_activity extends BaseActivity{
 
                             @Override
                             protected void onSuccess(Call call, Response response, String s) {
-                                LogUtils.showLog("教材详情",s);
+
+                                english_book = gson.fromJson(s,English_Book.class);
+                                LogUtils.showLog("教材详情",english_book.toString());
+
+
                             }
 
                             @Override
