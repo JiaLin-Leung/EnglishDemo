@@ -5,11 +5,10 @@ android:layout_height="match_parent">
 
 <TextView
     android:gravity="center"
-    android:textSize="30dp"
+    android:textSize="15dp"
     android:text="一年级"
-    android:background="@drawable/type"
     android:id="@+id/text_id"
     android:layout_width="match_parent"
-    android:layout_height="70dp" />
+    android:layout_height="50dp" />
 
 </android.support.constraint.ConstraintLayout>

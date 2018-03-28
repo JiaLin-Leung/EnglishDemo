@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.Bean.English_Book;
 import com.Bean.User;
 import com.englishdemo.Activity.BaseActivity;
+import com.englishdemo.Adapter.BookAdapter;
 import com.englishdemo.Internet.LoadCallBack;
 import com.englishdemo.Internet.OkHttpManager;
 import com.englishdemo.R;
@@ -81,14 +82,13 @@ public class English_change_book_activity extends BaseActivity{
                             protected void onSuccess(Call call, Response response, String s) {
 
                                 english_book = gson.fromJson(s,English_Book.class);
-                                LogUtils.showLog("教材详情",english_book.toString());
-
-
+                                LogUtils.showLog("获取教材详情成功",english_book.toString());
+                                change_book_books.setAdapter(new BookAdapter(english_book.getData().getBooks(),English_change_book_activity.this));
                             }
 
                             @Override
                             protected void onEror(Call call, int statusCode, Exception e) {
-
+                                LogUtils.showLog("获取教材详情失败",e.toString());
                             }
                         },params);
             }
