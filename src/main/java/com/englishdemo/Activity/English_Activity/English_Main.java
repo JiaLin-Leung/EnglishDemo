@@ -13,21 +13,30 @@ public class English_Main extends BaseActivity {
 
     private TextView all_title_text;
     private Button words_study;
+    private Button change_book;
     private ImageView all_title_img_back;
     private Intent intent;
 
     @Override
     public void initView() {
+        change_book = findViewById(R.id.change_book);
         all_title_text = findViewById(R.id.all_title_text);
         all_title_img_back = findViewById(R.id.all_title_img_back);
+
+        all_title_text.setText("英语主页");
+        words_study = findViewById(R.id.words_study);
+
+    }
+
+    @Override
+    public void initData() {
         all_title_img_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 English_Main.this.finish();
             }
         });
-        all_title_text.setText("英语主页");
-        words_study = findViewById(R.id.words_study);
+
         words_study.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -37,11 +46,6 @@ public class English_Main extends BaseActivity {
                 startActivity(intent);
             }
         });
-    }
-
-    @Override
-    public void initData() {
-
     }
 
     @Override
