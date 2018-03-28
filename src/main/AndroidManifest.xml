@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.tbkt.www.englishdemo">
+    package="com.englishdemo">
 
     <application
         android:allowBackup="true"
@@ -9,15 +9,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activity.LoginActivity">
+        <activity android:name="com.englishdemo.Activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.tbkt.www.englishdemo.Activity.MainActivity"/>
-        <activity android:name="com.tbkt.www.englishdemo.Activity.English_Activity.English_Main"/>
+        <activity android:name="com.englishdemo.Activity.MainActivity"/>
+        <activity android:name="com.englishdemo.Activity.English_Activity.English_Main"/>
+        <activity android:name="com.englishdemo.Activity.English_Activity.English_StudyWords" />
     </application>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>

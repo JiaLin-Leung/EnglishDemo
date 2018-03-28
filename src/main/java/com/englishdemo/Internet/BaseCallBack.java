@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo.Internet;
+package com.englishdemo.Internet;
 
 import com.google.gson.internal.$Gson$Types;
 

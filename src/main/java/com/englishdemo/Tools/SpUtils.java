@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo.Tools;
+package com.englishdemo.Tools;
 
 import android.content.Context;
 import android.content.SharedPreferences;

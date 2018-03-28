@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo.Internet;
+package com.englishdemo.Internet;
 
 import android.os.Handler;
 import android.os.Looper;
@@ -6,7 +6,7 @@ import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
-import com.tbkt.www.englishdemo.Tools.LogUtils;
+import com.englishdemo.Tools.LogUtils;
 
 import java.io.File;
 import java.io.IOException;

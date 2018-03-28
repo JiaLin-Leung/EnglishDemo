@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo.Activity;
+package com.englishdemo.Activity;
 
 import android.content.Intent;
 import android.view.View;
@@ -6,14 +6,14 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.google.gson.Gson;
-import com.tbkt.www.englishdemo.Bean.LoginBean;
-import com.tbkt.www.englishdemo.Internet.LoadCallBack;
-import com.tbkt.www.englishdemo.Internet.OkHttpManager;
-import com.tbkt.www.englishdemo.R;
-import com.tbkt.www.englishdemo.Tools.Constant_domain;
-import com.tbkt.www.englishdemo.Tools.Constant_url;
-import com.tbkt.www.englishdemo.Tools.LogUtils;
-import com.tbkt.www.englishdemo.Tools.SpUtils;
+import com.englishdemo.Bean.LoginBean;
+import com.englishdemo.Internet.LoadCallBack;
+import com.englishdemo.Internet.OkHttpManager;
+import com.englishdemo.R;
+import com.englishdemo.Tools.Constant_domain;
+import com.englishdemo.Tools.Constant_url;
+import com.englishdemo.Tools.LogUtils;
+import com.englishdemo.Tools.SpUtils;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -7,7 +7,7 @@ android {
 
 
     defaultConfig {
-        applicationId "com.tbkt.www.englishdemo"
+        applicationId "com.englishdemo"
         minSdkVersion 15
         targetSdkVersion 23
         versionCode 1

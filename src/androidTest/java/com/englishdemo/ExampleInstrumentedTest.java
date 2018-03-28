@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo;
+package com.englishdemo;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("com.tbkt.www.englishdemo", appContext.getPackageName());
+        assertEquals("com.englishdemo", appContext.getPackageName());
     }
 }

@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo.Bean;
+package com.englishdemo.Bean;
 
 import java.io.Serializable;
 

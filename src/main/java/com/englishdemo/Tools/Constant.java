@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo.Tools;
+package com.englishdemo.Tools;
 
 /**
  * Created by smile_raccoon on 2018/1/13.

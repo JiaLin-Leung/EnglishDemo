@@ -1,18 +1,20 @@
-package com.tbkt.www.englishdemo.Activity.English_Activity;
+package com.englishdemo.Activity.English_Activity;
 
+import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.tbkt.www.englishdemo.Activity.BaseActivity;
-import com.tbkt.www.englishdemo.R;
+import com.englishdemo.Activity.BaseActivity;
+import com.englishdemo.R;
 
 public class English_Main extends BaseActivity {
 
     private TextView all_title_text;
     private Button words_study;
     private ImageView all_title_img_back;
+    private Intent intent;
 
     @Override
     public void initView() {
@@ -30,7 +32,9 @@ public class English_Main extends BaseActivity {
             @Override
             public void onClick(View view) {
                 //TODO 跳转单词学习页面
-
+                intent = new Intent();
+                intent.setClass(English_Main.this,English_StudyWords.class);
+                startActivity(intent);
             }
         });
     }

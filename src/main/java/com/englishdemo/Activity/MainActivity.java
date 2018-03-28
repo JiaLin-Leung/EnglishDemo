@@ -1,12 +1,12 @@
-package com.tbkt.www.englishdemo.Activity;
+package com.englishdemo.Activity;
 
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.tbkt.www.englishdemo.Activity.English_Activity.English_Main;
-import com.tbkt.www.englishdemo.R;
+import com.englishdemo.Activity.English_Activity.English_Main;
+import com.englishdemo.R;
 
 public class MainActivity extends BaseActivity{
 

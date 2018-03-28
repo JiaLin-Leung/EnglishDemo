@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo.Activity;
+package com.englishdemo.Activity;
 
 import android.app.Activity;
 import android.content.Context;

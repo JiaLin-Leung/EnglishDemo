@@ -1,4 +1,4 @@
-package com.tbkt.www.englishdemo;
+package com.englishdemo;
 
 import org.junit.Test;
 
