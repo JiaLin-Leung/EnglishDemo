@@ -67,7 +67,7 @@ public class English_change_book_activity extends BaseActivity{
             public void onItemClick(AdapterView<?> adapterView, View view, final int i, long l) {
                     LogUtils.showLog("我点击的是---",i+1+"");
                     params_book_info = new HashMap<String, String>();
-                    params_book_info.put("book_id",english_book.getData().getBooks().get(i+1).getId());
+                    params_book_info.put("book_id",english_book.getData().getBooks().get(i).getId());
                     okHttpManager.postRequest(English_change_book_activity.this, Constant_domain.BaseUrl + Constant_url.book_set, new LoadCallBack<String>(English_change_book_activity.this) {
 
                         @Override
