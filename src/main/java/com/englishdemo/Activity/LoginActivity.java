@@ -46,11 +46,13 @@ public class LoginActivity extends BaseActivity {
         login_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                username = login_ed_username.getText().toString();
-                password = login_ed_password.getText().toString();
-                int a = Judge_empty(LoginActivity.this,username,password,"用户名","密码");
-                if (a != -1){
-                    user_login(username,password);
+                if(fastClick()){
+                    username = login_ed_username.getText().toString();
+                    password = login_ed_password.getText().toString();
+                    int a = Judge_empty(LoginActivity.this,username,password,"用户名","密码");
+                    if (a != -1){
+                        user_login(username,password);
+                    }
                 }
             }
         });
@@ -99,8 +101,8 @@ public class LoginActivity extends BaseActivity {
                 SpUtils.save(LoginActivity.this,"token",loginBean.getTbkt_token());
                 SpUtils.save(LoginActivity.this,"user_id",loginBean.getData().getUser_id());
                 intent.setClass(LoginActivity.this,MainActivity.class);
-                startActivity(intent);
-                LoginActivity.this.finish();
+//                startActivity(intent);
+//                LoginActivity.this.finish();
             }
 
             @Override

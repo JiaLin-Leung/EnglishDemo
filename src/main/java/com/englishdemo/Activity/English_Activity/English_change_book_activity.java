@@ -136,7 +136,7 @@ public class English_change_book_activity extends BaseActivity{
                     grade_flag_begin = 1;
                     grade_flag_end = 6;
                 }else{
-                    grade_flag_begin = 6;
+                    grade_flag_begin = 7;
                     grade_flag_end = 9;
                 }
                 for(int a = grade_flag_begin;a<=grade_flag_end;a++){

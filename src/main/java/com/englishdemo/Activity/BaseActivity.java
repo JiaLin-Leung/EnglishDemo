@@ -3,8 +3,13 @@ package com.englishdemo.Activity;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
+
+import com.englishdemo.Tools.LogUtils;
+import com.englishdemo.Tools.SpUtils;
 
 
 /**
@@ -67,14 +72,15 @@ public abstract class BaseActivity extends Activity {
         startActivity(intent);
     }
 
+    private static long lastClick = 0;
     /**
      * [防止快速点击]
      *
      * @return
      */
     public boolean fastClick() {
-        long lastClick = 0;
         if (System.currentTimeMillis() - lastClick <= 1000) {
+            Toast.makeText(this,"手太快",Toast.LENGTH_SHORT).show();
             return false;
         }
         lastClick = System.currentTimeMillis();
